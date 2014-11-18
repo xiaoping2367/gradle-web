@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+
+    <!-- annnotation을 사용한 컨트롤러를 자동으로 스캔한다. -->
+    <context:component-scan base-package="com.andy" />
+
+    <!-- ======================================================== HANDLER SECTION -->
+
+    <!-- ANNOTATION을 사용하는 컨트롤러의 URL MAPPING 처리 CLASS -->
+    <!-- 다음의 URL을 참고하세요. http://code.google.com/p/springplugins/ -->
+
+
+    <!-- urls에서 정의된 url만 처리함. -->
+    <!-- 이 핸들러에서 처리되는 요청은 세션체크 하지 않음. -->
+    <!-- /*/guest/* 처럼 작성하며 패턴에 매칭되면 처리함 -->
+     <bean id="selectedAnnotationHandlerMapping2" class="org.springplugins.web.SelectedAnnotationHandlerMapping">
+        <property name="alwaysUseFullPath">
+            <value>true</value>
+        </property>
+        <property name="order">
+            <value>1</value>
+        </property>
+        <property name="urls">
+            <list>
+                <value>/*/guest/*</value>
+            </list>
+        </property>
+<!--         <property name="interceptors">
+            <list>
+                <ref bean="requestUtilInterceptor" />
+            </list>
+        </property>
+ -->    </bean>
+
+
+
+    <!-- 위의 핸들러들에서 잡히지 않은 URL은 여기서 처리함 -->
+    <bean id="defaultAnnotationHandlerMapping"
+        class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="alwaysUseFullPath">
+            <value>true</value>
+        </property>
+        <property name="order">
+            <value>2</value>
+        </property>
+<!--          <property name="interceptors">
+            <list>
+                <ref bean="requestUtilInterceptor" />
+                <ref bean="sessionInterceptor" />
+				<ref bean="menuInterceptor" />
+            </list>
+        </property> 
+ -->    </bean>
+
+
+
+
+    <bean
+        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="alwaysUseFullPath">
+            <value>true</value>
+        </property>
+         <property name="webBindingInitializer">
+            <bean
+                class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="validator" ref="validator" />
+            </bean>
+        </property>
+        <property name="messageConverters">
+            <list>
+            	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean
+                    class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<!-- <property name="objectMapper" ref="jacksonObjectMapper" /> -->
+				    <property name="supportedMediaTypes">
+				        <list>				        
+				      		<!-- <value>text/plain;charset=UTF-8</value> -->
+				      		<value>application/json;charset=UTF-8</value>
+		                </list>
+				    </property>
+				</bean>                
+            </list>
+        </property>        
+    </bean>
+
+    <!-- ======================================================== VALIDATOR 
+        SECTION -->
+ 
+    <bean id="validator"
+        class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <!-- ======================================================== MessagoeSource 
+        SECTION -->
+
+    <bean id="msAccessor"
+        class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg>
+            <ref local="messageSource" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="messageSource"
+        class="org.springframework.context.support.ResourceBundleMessageSource">
+         <property name="basenames">
+            <list>
+<!-- 				<value>com.naon.biz.i18n.commonMessages</value> -->
+				<value>default</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ======================================================== ViewResolver 
+        SECTION -->
+
+
+    <!-- 쿠키값으로 locale를 결정하기로 함. 사용자가 화면에서 English를 누르면 영어로, Korean을 누르면 한글로 -->
+    <bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="locale" />  <!-- 쿠키이름 -->
+        <property name="cookieMaxAge" value="100000" />        <!-- 쿠키 살려둘 시간, -1로 하면 브라우져를 닫을 때 없어짐. -->
+        <property name="cookiePath" value="/" />      <!-- Path를 지정해 주면 해당하는 path와 그 하위 path에서만 참조 -->
+        <property name="defaultLocale" value="ko" />   <!-- 기본 한국어 -->
+    </bean>
+    
+    
+
+    <!-- VIEW(JSP, HTML)을 결정하는 클래스 -->
+    <bean id="viewResolver1"
+        class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="basenames">
+            <list>
+                <!-- <value>com.naon.sample.spring.sample_views</value> -->
+            </list>
+        </property>
+        <property name="order">
+            <value>1</value>
+        </property>
+    </bean>
+
+    <bean id="viewResolver2"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+        <property name="order">
+            <value>2</value>
+        </property>
+        <property name="contentType" value="text/html; charset=UTF-8" />
+    </bean>
+
+
+<!--     <bean id="excelView" class="com.naon.framework.web.view.BaseExcelView">
+    </bean> -->
+
+    <!-- ======================================================== FILE UPLOAD 
+        SECTION -->
+
+
+
+    <!-- File Upload에서 사용함. -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 바이트 단위로 최대용량을 지정한다. -->
+        <property name="maxUploadSize">
+            <value>
+                1000000000
+            </value>
+        </property>
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="uploadTempDir" ref="uploadTempResource" />
+    </bean>
+
+    <bean id="uploadTempResource" class="org.springframework.core.io.FileSystemResource">
+        <constructor-arg value="./temp/" />
+    </bean>
+    
+    
+
+    <!-- ======================================================== Interceptor 
+        SECTION -->
+ 
+  
+    <!-- ======================================================== ASPECT SECTION -->
+    <aop:aspectj-autoproxy />
+
+  
+</beans>

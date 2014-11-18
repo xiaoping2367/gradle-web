@@ -1,0 +1,44 @@
+<sitemesh>
+    <!--
+      xml 위치를 설정해줌
+     -->
+    <property name="decorators-file" value="/WEB-INF/decorators.xml" />
+    <!--
+                제외될 파일이 설정된 파일. 해당 파일의 excludes 태그에서 설정
+     -->
+    <excludes file="${decorators-file}" />
+    <!--
+      text/html 혹은 text/html;charset=UTF-8형인 content-type 에 대해서만
+         파싱을 함. 즉 image/gif 같은 content 타입을 가지고 있는 파일은 첨부터
+          아웃오브 안중
+     -->
+    <page-parsers>
+        <parser default="true" 
+            class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
+        <parser content-type="text/html" 
+            class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
+        <parser content-type="text/html;charset=UTF-8"
+            class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
+    </page-parsers>
+
+    <!--
+              많은 데코레이터 매퍼 중에 기본 매퍼인  ConfigDecoratorMapper 만 사용.
+     decorators.xml 설정을 확인후 매핑 결정.
+     여타 다른 매퍼 추가 가능 sample 설치후 확인
+
+     -->
+    <decorator-mappers>
+        <mapper class= "com.opensymphony.module.sitemesh.mapper.ParameterDecoratorMapper">
+            <param name="decorator.parameter" value="decorator" />
+            <param name="parameter.name" value="confirm" />
+            <param name="parameter.value" value="true" />
+        </mapper>
+        <mapper class="com.opensymphony.module.sitemesh.mapper.PageDecoratorMapper">
+            <param name="property.1" value="meta.decorator" />
+            <param name="property.2" value="decorator" />
+        </mapper>
+        <mapper class="com.naon.framework.sitemesh.ConfigDecoratorMapper">
+            <param name="config" value="${decorators-file}" />
+        </mapper>
+    </decorator-mappers>
+</sitemesh>

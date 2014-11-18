@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+ 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <!-- 
+    ===========================================================================
+       AOP
+       
+	 1. @AspectJ를 사용할까? Spring AOP를 사용할까? 아니면, 섞어서 사용할까?
+	 2. 클래스 기반 프록싱을 사용할까? 인터페이스 기반 프록싱을 사용할까?
+    ===========================================================================
+    -->
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+<!-- 	<bean id="logging" class="com.naon.framework.aspect.LoggingAspect" />
+
+	<aop:config>
+		<aop:pointcut id="serviceMethod"
+			expression="execution(public * com.naon.biz.*.service(..))" />
+		<aop:aspect id="serviceAspect" ref="logging">
+			<aop:after-throwing pointcut-ref="serviceMethod"
+				method="throwingLogging" throwing="ex" />
+			<aop:around pointcut-ref="serviceMethod" method="logging" />
+		</aop:aspect>
+	</aop:config>
+
+	<aop:config>
+		<aop:pointcut id="daoMethod"
+			expression="execution(public * com.naon.biz.*.dao(..))" />
+		<aop:aspect id="daoAspect" ref="logging">
+			<aop:after-throwing pointcut-ref="daoMethod"
+				method="throwingLogging" throwing="ex" />
+			<aop:around pointcut-ref="daoMethod" method="logging" />
+		</aop:aspect>
+	</aop:config>
+ -->
+ 
+ 
+ 
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 데코레이터 파일들이 있는 디폴트 디렉토리를 선택 -->
+<decorators defaultdir="/jsp/biz/decorators">
+	<!-- 사이트 매쉬에서 제외할 패턴 . 해당패턴은 사이트 매쉬를 사용해서 감싸는 대상이 아님 -->
+	<excludes>
+		<pattern>/resources/*</pattern>
+		<pattern>*.html</pattern>
+		<pattern>/*.htm</pattern>
+		<pattern>/*.js</pattern>
+		<pattern>/*.css</pattern>
+	</excludes>
+
+	<!-- 기본 -->
+	<decorator name="view" page="base/baseDecorator.jsp">
+		<pattern>/view/*</pattern>
+	</decorator>
+
+</decorators>

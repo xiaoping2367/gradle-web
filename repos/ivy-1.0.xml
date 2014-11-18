@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+  <info organisation="" module="gradle-web" revision="1.0" status="integration" publication="20141114152613">
+    <description/>
+  </info>
+  <configurations>
+    <conf name="archives" visibility="public" description="Configuration for archive artifacts."/>
+    <conf name="compile" visibility="private" description="Compile classpath for source set 'main'." extends="providedCompile"/>
+    <conf name="default" visibility="public" description="Configuration for default artifacts." extends="runtime"/>
+    <conf name="providedCompile" visibility="private" description="Additional compile classpath for libraries that should not be part of the WAR archive."/>
+    <conf name="providedRuntime" visibility="private" description="Additional runtime classpath for libraries that should not be part of the WAR archive." extends="providedCompile"/>
+    <conf name="runtime" visibility="private" description="Runtime classpath for source set 'main'." extends="compile,providedRuntime"/>
+    <conf name="testCompile" visibility="private" description="Compile classpath for source set 'test'." extends="compile"/>
+    <conf name="testRuntime" visibility="private" description="Runtime classpath for source set 'test'." extends="runtime,testCompile"/>
+  </configurations>
+  <publications>
+    <artifact name="gradle-web" type="war" ext="war" conf="archives"/>
+    <artifact name="gradle-web" type="jar" ext="jar" conf="runtime"/>
+  </publications>
+  <dependencies>
+    <dependency org="commons-collections" name="commons-collections" rev="3.2" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-core" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-context" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-web" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-webmvc" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-aop" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.springframework" name="spring-beans" rev="3.2.11.RELEASE" conf="compile-&gt;default"/>
+    <dependency org="org.aspectj" name="aspectjrt" rev="1.8.2" conf="compile-&gt;default"/>
+    <dependency org="org.aspectj" name="aspectjweaver" rev="1.8.2" conf="compile-&gt;default"/>
+    <dependency org="javax.validation" name="validation-api" rev="1.1.0.Final" conf="compile-&gt;default"/>
+    <dependency org="org.hibernate" name="hibernate-entitymanager" rev="4.3.6.Final" conf="compile-&gt;default"/>
+    <dependency org="org.hibernate" name="hibernate-core" rev="4.3.6.Final" conf="compile-&gt;default"/>
+    <dependency org="org.hibernate" name="hibernate-validator" rev="5.1.2.Final" conf="compile-&gt;default"/>
+    <dependency org="org.codehaus.jackson" name="jackson-core-asl" rev="1.9.13" conf="compile-&gt;default"/>
+    <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.4.3" conf="compile-&gt;default"/>
+    <dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.4.3" conf="compile-&gt;default"/>
+    <dependency org="commons-fileupload" name="commons-fileupload" rev="1.3.1" conf="compile-&gt;default"/>
+    <dependency org="net.sf.json-lib" name="json-lib" rev="2.2.3" conf="compile-&gt;default">
+      <artifact name="json-lib" type="jar" ext="jar" conf="" m:classifier="jdk15"/>
+    </dependency>
+    <dependency org="com.ibm.icu" name="icu4j" rev="54.1.1" conf="compile-&gt;default"/>
+    <dependency org="opensymphony" name="sitemesh" rev="2.4.2" conf="compile-&gt;default"/>
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.7" conf="compile-&gt;default"/>
+    <dependency org="commons-betwixt" name="commons-betwixt" rev="1.0-beta-1.20020910.124754" conf="compile-&gt;default"/>
+    <dependency org="xstream" name="xstream" rev="1.2.2" conf="compile-&gt;default"/>
+    <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="providedCompile-&gt;default"/>
+    <dependency org="junit" name="junit" rev="4.+" conf="testCompile-&gt;default"/>
+  </dependencies>
+</ivy-module>
