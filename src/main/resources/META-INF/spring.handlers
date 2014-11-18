@@ -1,1 +1,1 @@
-http\://www.mycompany.com/schema/myns=org.springframework.samples.xml.MyNamespaceHandler
+http\://www.naonsoft.com/schema/ngw=com.naon.framework.lifecycle.config.NgwNamespaceHandler

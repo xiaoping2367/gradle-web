@@ -12,8 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.xstream.XStream;
-
 public class JavaBeanToXmlTest {
 
 	@Before
@@ -116,7 +114,7 @@ public class JavaBeanToXmlTest {
 	
 	@Test
 	public void xstreamTest() {
-		ServerInfo[] sis = new ServerInfo[2];
+	/*	ServerInfo[] sis = new ServerInfo[2];
 		sis[0] = new ServerInfo(); 
 		sis[0].setMsgrServerType("1");
 		sis[0].setMsgrServerVer("2.0");
@@ -142,7 +140,7 @@ public class JavaBeanToXmlTest {
 		xs.alias("message", MessageBean.class);
 		xs.alias("serverInfo", ServerInfo.class);
 		String xml = xs.toXML(bean);
-		System.out.println(xml);
+		System.out.println(xml);*/
 	}
 	
 }

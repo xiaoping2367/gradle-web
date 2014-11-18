@@ -6,7 +6,8 @@
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:annotation-config />
-    
+    <!-- annnotation을 사용한 컨트롤러를 자동으로 스캔한다. -->
+    <context:component-scan base-package="com.naon, org.gradle" />
     
     <!-- annnotation을 사용한 컨트롤러를 자동으로 스캔한다. -->
     <!-- 이걸 실행하면  의존성 체크를 하는데 autowired한것중 org.springframework.context.support.MessageSourceAccessor 를 찾지 못해서 에러가 생기므로 주석처리
