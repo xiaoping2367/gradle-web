@@ -22,6 +22,11 @@ public class InterfaceDrivenBeanDefinitionParser implements BeanDefinitionParser
 
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
 
+		
+		
+		System.out.println("=============>>>>> ");
+		
+		
 		Object source = parserContext.extractSource(element);
 
 		RuntimeBeanReference logProviderService = getLogProviderService(element, source, parserContext);
